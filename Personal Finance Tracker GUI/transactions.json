@@ -1,0 +1,16 @@
+[
+    {
+        "id": "6cfbbb0a-bda9-4e9b-817f-72d264e63cad",
+        "type": "Income",
+        "amount": 1000.0,
+        "category": "Salary",
+        "note": "Expense"
+    },
+    {
+        "id": "087d4f12-7bf7-46f5-bc9c-f0d80955d83d",
+        "type": "Income",
+        "amount": 2000.0,
+        "category": "Food",
+        "note": ""
+    }
+]
