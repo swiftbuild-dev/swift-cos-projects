@@ -1,14 +1,21 @@
+# pyrefly: ignore [missing-import]
+import customtkinter as ctk
 from finance_manager import FinanceManager
 from ui import FinanceTrackerUI
 
 def main():
-    # Encapsulation: The system state is initialized in an isolated manager.
+    # Set the overall appearance mode
+    ctk.set_appearance_mode("light")
+    
+    # Initialize the core application components
+    root = ctk.CTk()
     manager = FinanceManager()
     
-    # We pass the manager to the UI, avoiding global variables.
-    app = FinanceTrackerUI(manager)
+    # Bind the UI to the root window and the manager
+    app = FinanceTrackerUI(root, manager)
     
-    app.mainloop()
+    # Start the event loop
+    root.mainloop()
 
 if __name__ == "__main__":
     main()

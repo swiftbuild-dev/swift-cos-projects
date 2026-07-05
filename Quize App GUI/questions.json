@@ -1,42 +1,32 @@
 [
     {
-        "prompt": "What does OOP stand for?",
-        "options": [
-            "Object-Oriented Programming",
-            "Only Object Programming",
-            "Objective Output Process",
-            "Optimal Order Protocol"
-        ],
-        "correct_index": 0
+        "text": "What is the primary purpose of Encapsulation in OOP?",
+        "options": ["Code reusability", "Data hiding and protection", "Creating multiple forms", "Defining abstract classes"],
+        "answer": ["Data hiding and protection"],
+        "type": "single"
     },
     {
-        "prompt": "Which OOP pillar allows a child class to reuse code from a parent class?",
-        "options": [
-            "Abstraction",
-            "Polymorphism",
-            "Inheritance",
-            "Encapsulation"
-        ],
-        "correct_index": 2
+        "text": "Which of the following are pillars of OOP? (Select all that apply)",
+        "options": ["Polymorphism", "Compilation", "Inheritance", "Execution"],
+        "answer": ["Polymorphism", "Inheritance"],
+        "type": "multi"
     },
     {
-        "prompt": "In Python, how do you define an abstract base class?",
-        "options": [
-            "Using the interface keyword",
-            "Inheriting from ABC (abc module)",
-            "Decorating the class with @abstract",
-            "Creating empty methods only"
-        ],
-        "correct_index": 1
+        "text": "In Python, which keyword is used to define a class?",
+        "options": ["def", "function", "class", "object"],
+        "answer": ["class"],
+        "type": "single"
     },
     {
-        "prompt": "What is the main purpose of Encapsulation?",
-        "options": [
-            "To make code run faster",
-            "To bundle data and methods, restricting direct access",
-            "To allow multiple inheritance",
-            "To convert objects to strings"
-        ],
-        "correct_index": 1
+        "text": "Which built-in Python decorators are commonly used with classes? (Select all that apply)",
+        "options": ["@staticmethod", "@classmethod", "@loop", "@property"],
+        "answer": ["@staticmethod", "@classmethod", "@property"],
+        "type": "multi"
+    },
+    {
+        "text": "What does a subclass inherit from its parent class?",
+        "options": ["Only methods", "Only properties", "Both methods and properties", "Neither"],
+        "answer": ["Both methods and properties"],
+        "type": "single"
     }
 ]
