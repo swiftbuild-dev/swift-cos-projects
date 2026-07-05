@@ -1,30 +1,57 @@
 # Basic Calculator GUI
 
-A simple and modern graphical calculator application built using Python and the `customtkinter` library. This project not only provides a functional calculator but also serves as a great example of core Object-Oriented Programming (OOP) principles in practice.
+A beautifully designed calculator application built with Python and `customtkinter`. It handles standard arithmetic operations through a clean, modern user interface while heavily relying on Object-Oriented Design principles for its core logic.
 
-## 📂 File Structure
+## Key Components
 
-*   **`main.py`**: The starting point of the application. Running this file launches the calculator window.
-*   **`calculator.py`**: The "brain" of the calculator. It handles all the math logic and is structured using strong OOP concepts.
-*   **`ui.py`**: The visual part of the application. It uses `customtkinter` to draw the buttons, screen, and layout, and it connects those buttons to the logic in `calculator.py`.
-*   **`requirements.txt`**: A list of the external Python libraries needed to run this project (like `customtkinter`).
+### 1. `Operation` (The Blueprint)
+The foundational contract for any math operation.
+```python
+class Operation(ABC):
+    @abstractmethod
+    def execute(self, a: float, b: float) -> float: 
+        pass
+```
 
-## 🏛️ The Four Pillars of OOP in This Code
+### 2. Specific Operations
+Individual classes that implement actual mathematics.
+```python
+class Addition(Operation):
+    def execute(self, a, b): return a + b
 
-This project was built to clearly demonstrate the four fundamental concepts of Object-Oriented Programming. Here is how they appear in the code, explained simply:
+class Subtraction(Operation):
+    def execute(self, a, b): return a - b
+```
 
-### 1. Abstraction
-*What it means:* Hiding complex background details and showing only the essential parts. Think of a TV remote: you press a button to change the channel without needing to know how the remote's internal circuitry works.
-*Where it is in the code:* In `calculator.py`, we have a class called `Operation`. This is an "Abstract Base Class" (ABC). It defines a rule that any operation *must* have an `execute()` method, but it doesn't actually do any math itself. It provides a simple, standard way to talk about operations without getting bogged down in the details of addition versus division.
+### 3. The Calculator Core
+The engine that manages inputs and calculations.
+```python
+class Calculator:
+    def __init__(self):
+        self._val = "0"
+        self._ops = {"+": Addition(), "−": Subtraction(), "×": Multiplication(), "÷": Division()}
+        
+    def calculate(self):
+        # Executes the chosen operation seamlessly
+        res = self._op.execute(self._stored, float(self._val))
+```
 
-### 2. Inheritance
-*What it means:* Creating new classes that are based on an existing class. The new class "inherits" properties and behaviors from the parent class, allowing you to reuse code.
-*Where it is in the code:* In `calculator.py`, the `Addition`, `Subtraction`, `Multiplication`, and `Division` classes all inherit from the parent `Operation` class. Because they inherit from `Operation`, they agree to follow its rules (having an `execute()` method) and provide their specific mathematical logic.
+## The Four Pillars of OOP in this Project
 
-### 3. Encapsulation
-*What it means:* Keeping an object's internal data safe and hidden from the outside world. It bundles the data and the functions that use that data into one secure package. You can only interact with the object through specific, allowed methods.
-*Where it is in the code:* In `calculator.py`, the `Calculator` class holds variables like `self._val` (the current number on the screen) and `self._op` (the current math operation). The underscore `_` at the beginning of these names is a signal in Python that these are "private" and shouldn't be touched directly from the outside (like from `ui.py`). Instead, `ui.py` interacts with the calculator using safe, public methods like `input_digit()`, `calculate()`, and `clear()`.
+This project is a perfect example of Object-Oriented Programming (OOP). Here's how the four main pillars are used:
 
-### 4. Polymorphism
-*What it means:* "Many forms." It's the ability to use a single type of command or method on different types of objects, and each object will know exactly how to handle it in its own way.
-*Where it is in the code:* Inside the `Calculator` class (in `calculator.py`), there is a dictionary called `self._ops` that holds all the different operation objects (Addition, Subtraction, etc.). When the user hits the "=" button, the calculator simply calls `self._op.execute(...)`. The calculator doesn't need to write a bunch of `if/else` statements to check what kind of operation it is. Because of polymorphism, it just calls `execute()`, and whether the object is `Addition` or `Division`, that object knows the right math to perform!
+1. **Abstraction**: 
+   - **Where it is**: The `Operation` base class (`calculator.py`).
+   - **How it works**: By defining an `execute` method as an `@abstractmethod`, we guarantee that any math operation will have exactly that method. The overall calculator doesn't need to know *how* to add or subtract; it just knows every operation has an `execute()` method.
+
+2. **Inheritance**: 
+   - **Where it is**: The `Addition`, `Subtraction`, `Multiplication`, and `Division` classes (`calculator.py`).
+   - **How it works**: They inherit the strict rules of the `Operation` class. Because they inherit this structure, the calculator can treat them all uniformly.
+
+3. **Encapsulation**: 
+   - **Where it is**: The variables inside the `Calculator` class, like `self._val`, `self._stored`, and `self._op` (`calculator.py`).
+   - **How it works**: These variables are "protected" (indicated by the underscore). The user interface (`ui.py`) is not allowed to reach inside and directly change the number on the screen. Instead, the UI is forced to press buttons using methods like `input_digit()` and `set_operation()`, keeping the calculator's internal brain safe from bad inputs.
+
+4. **Polymorphism**: 
+   - **Where it is**: The `calculate()` method in the `Calculator` class.
+   - **How it works**: When you hit the equals (`=`) sign, the calculator takes whatever operation it has saved (e.g., `Addition` or `Division`) and simply calls `self._op.execute(a, b)`. It does *not* use a messy block of `if` statements to check what the symbol is. The correct math happens automatically because the `execute()` method takes different forms depending on the object!
