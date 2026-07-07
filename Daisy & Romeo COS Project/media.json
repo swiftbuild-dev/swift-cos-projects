@@ -1,0 +1,26 @@
+[
+    {
+        "title": "Inception",
+        "rating": 4,
+        "type": "Movie",
+        "director": "Christopher Nolan"
+    },
+    {
+        "title": "Dune",
+        "rating": 5,
+        "type": "Book",
+        "author": "Frank Herbert"
+    },
+    {
+        "title": "The Matrix",
+        "rating": 5,
+        "type": "Movie",
+        "director": "The Wachowskis"
+    },
+    {
+        "title": "1984",
+        "rating": 4,
+        "type": "Book",
+        "author": "George Orwell"
+    }
+]

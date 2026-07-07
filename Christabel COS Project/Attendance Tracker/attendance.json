@@ -1,0 +1,37 @@
+[
+    {
+        "student_name": "Charlie Brown",
+        "date_str": "2026-07-07",
+        "status": "present"
+    },
+    {
+        "student_name": "Alice Smith",
+        "date_str": "2026-07-07",
+        "status": "absent"
+    },
+    {
+        "student_name": "Alice Smith",
+        "date_str": "2026-07-07",
+        "status": "present"
+    },
+    {
+        "student_name": "Alice Smith",
+        "date_str": "2026-07-07",
+        "status": "absent"
+    },
+    {
+        "student_name": "Alice Smith",
+        "date_str": "2026-07-07",
+        "status": "absent"
+    },
+    {
+        "student_name": "Alice Smith",
+        "date_str": "2026-07-07",
+        "status": "absent"
+    },
+    {
+        "student_name": "Alice Smith",
+        "date_str": "2026-07-07",
+        "status": "absent"
+    }
+]

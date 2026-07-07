@@ -1,0 +1,17 @@
+[
+    {
+        "username": "uti",
+        "password_hash": "8acd091b565ef354308ce9cc46f72137ae3e06cebc316ba6c1755cc9d99ea5a6",
+        "role": "StandardUser"
+    },
+    {
+        "username": "utifavour",
+        "password_hash": "8acd091b565ef354308ce9cc46f72137ae3e06cebc316ba6c1755cc9d99ea5a6",
+        "role": "StandardUser"
+    },
+    {
+        "username": "utifavour10",
+        "password_hash": "0d2b1935f4398029f43e29d386fec7eedfb55bff7c09a85b769ae2b399142bbc",
+        "role": "StandardUser"
+    }
+]
