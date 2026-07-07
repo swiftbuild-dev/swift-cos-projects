@@ -1,50 +1,53 @@
-# Multiple-Choice Quiz App
+# Quiz App GUI
 
-## What This Does
-This is a simple desktop quiz application built with Python and CustomTkinter. It presents users with a mix of single-answer and multi-answer questions, providing immediate visual feedback upon submission. The app keeps a running score and displays the final result at the end, demonstrating core Object-Oriented Programming principles in action.
+## 🚀 Core Functionality
+A clean, interactive Quiz application where users can answer multiple-choice questions. It supports single-answer and multi-answer question types, grades the quiz automatically, and shows a final score.
 
-## The Four Pillars
+## 🧠 The Four Pillars of OOP (Object-Oriented Programming)
+This project uses all four core principles of OOP. Here's how it works using simple terms!
 
-### Abstraction
-We define a base template that guarantees all question types have an `is_correct` method, hiding the specific grading complexity from the rest of the app.
+### 1. 🔒 Abstraction — *Hiding the complex details*
+Abstraction is like using a TV remote. You press a button to change the channel, but you don't need to know how the circuits inside work. In our code, we create a basic blueprint that says *what* should happen, but leaves the *how* for later.
+
+**Code Example:**
 ```python
+# We define a template (Question) that guarantees any subclass will have an is_correct() method.
 class Question(ABC):
-    def __init__(self, text: str, options: list[str]):
-        self.text = text
-        self.options = options
-
     @abstractmethod
     def is_correct(self, selected_answer: str) -> bool:
         pass
 ```
 
-### Inheritance
-Subclasses reuse the core attributes from the base `Question` class, adding only the specific properties they need (like `correct_answer`).
+### 2. 👪 Inheritance — *Passing down traits*
+Inheritance is like a child inheriting eye color from a parent. A new class (child) can reuse the code from an existing class (parent) so we don't have to write the same code twice.
+
+**Code Example:**
 ```python
+# We reuse the text and options setup from the Question base class,
+# adding only what's unique to a single-answer question.
 class SingleAnswerQuestion(Question):
     def __init__(self, text: str, options: list[str], correct_answer: str):
         super().__init__(text, options)
         self.correct_answer = correct_answer
 ```
 
-### Encapsulation
-The `Quiz` class hides its internal state, forcing external code to use specific methods rather than allowing direct manipulation of the score or question list.
+### 3. 🔄 Polymorphism — *Many forms*
+Polymorphism means "many forms". It's like how you can tell a dog to "speak" and it barks, but if you tell a cat to "speak", it meows. They both understand the same command but do it differently.
+
+**Code Example:**
+```python
+# The Quiz doesn't need to know which type of question it's grading.
+# It just calls is_correct() and the specific question object handles its own logic.
+is_right = q.is_correct(selected_answer)
+```
+
+### 4. 📦 Encapsulation — *Protecting the data*
+Encapsulation is like a safe. The valuables (data) are locked inside, and you can only access them if you have the key (specific methods). This prevents outside code from accidentally messing up the internal data.
+
+**Code Example:**
 ```python
 class Quiz:
     def __init__(self, questions: list[Question]):
-        self._questions = questions
+        # We use private variables (_score) so external code can't cheat!
         self._score = 0
-        self._current_index = 0
-```
-
-### Polymorphism
-The app can grade any type of question without checking what kind it is, because each question class implements its own unique version of `is_correct()`.
-```python
-    def submit_answer(self, selected_answer: str) -> bool:
-        q = self.get_current_question()
-        if not q: return False
-        
-        is_right = q.is_correct(selected_answer)
-        if is_right: self._score += 1
-        return is_right
 ```

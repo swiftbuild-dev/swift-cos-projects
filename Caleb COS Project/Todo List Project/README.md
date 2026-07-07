@@ -1,139 +1,51 @@
-# OOP Todo List — Python Project
+# Todo List Project
 
-A simple **Todo List desktop app** built with Python. It demonstrates all **four pillars of Object-Oriented Programming (OOP)** in a clean, minimal way.
+## 🚀 Core Functionality
+A simple **Todo List desktop app** built with Python. It allows users to add daily tasks and one-off tasks, mark them as completed, and delete them. It saves tasks locally so they persist when you close the app.
 
----
+## 🧠 The Four Pillars of OOP (Object-Oriented Programming)
+This project uses all four core principles of OOP. Here's how it works using simple terms!
 
-## 📁 Project Structure
+### 1. 🔒 Abstraction — *Hiding the complex details*
+Abstraction is like using a TV remote. You press a button to change the channel, but you don't need to know how the circuits inside work. In our code, we create a basic blueprint that says *what* should happen, but leaves the *how* for later.
 
-```
-Todo List Project/
-├── main.py       # The user interface (what you see on screen)
-├── tasks.py      # The back-end logic (tasks & data management)
-├── tasks.json    # Auto-generated: stores your saved tasks
-└── README.md     # This file
-```
-
----
-
-## 🚀 How to Run
-
-1. Make sure you have Python installed.
-2. Install the required package:
-   ```bash
-   pip install customtkinter
-   ```
-3. Run the app:
-   ```bash
-   python main.py
-   ```
-
----
-
-## 🧠 The Four Pillars of OOP — Explained Simply
-
-This project uses all four core principles of Object-Oriented Programming. Here's where each one appears:
-
----
-
-### 1. 🔒 Abstraction — *Hide the complexity*
-
-> **File:** `tasks.py` → `class Task(ABC)`
-
-Abstraction means showing only what's necessary and hiding the internal details.
-
-The `Task` class is **abstract** — it cannot be used directly. It just defines the *blueprint* that all tasks must follow. It says: *"Every task must have a `display()` method"*, but doesn't say how.
-
+**Code Example:**
 ```python
+# Task is an abstract class — it defines WHAT every task must have, but does not say HOW.
 class Task(ABC):
     @abstractmethod
     def display(self) -> str:
-        pass  # No implementation here — subclasses decide HOW
+        pass
 ```
 
----
+### 2. 👪 Inheritance — *Passing down traits*
+Inheritance is like a child inheriting eye color from a parent. A new class (child) can reuse the code from an existing class (parent) so we don't have to write the same code twice.
 
-### 2. 👪 Inheritance — *Reuse and extend*
-
-> **File:** `tasks.py` → `SimpleTask` and `RecurringTask`
-
-Inheritance lets a new class **reuse code from an existing class**.
-
-Both `SimpleTask` and `RecurringTask` inherit from `Task`. They automatically get all of `Task`'s properties (`id`, `title`, `prio`, `is_comp`) without rewriting them.
-
+**Code Example:**
 ```python
-class SimpleTask(Task):      # Inherits from Task
-    ...
-
-class RecurringTask(Task):   # Also inherits from Task
-    ...
-```
-
----
-
-### 3. 🔄 Polymorphism — *One interface, many behaviours*
-
-> **File:** `tasks.py` → `display()` method in `SimpleTask` and `RecurringTask`
-
-Polymorphism means the **same method name behaves differently** depending on the object.
-
-Both task types have a `display()` method, but they produce different text. The app calls `task.display()` without needing to know which type it is — Python figures it out automatically.
-
-```python
+# SimpleTask inherits the shared code (id, title, prio, is_comp) from Task.
 class SimpleTask(Task):
     def display(self):
-        return f"{self.title} [{self.prio}]"           # Simple text
-
-class RecurringTask(Task):
-    def display(self):
-        return f"↻ {self.title} [{self.prio}] — Daily" # Different text
+        return f"{self.title}"
 ```
 
----
+### 3. 🔄 Polymorphism — *Many forms*
+Polymorphism means "many forms". It's like how you can tell a dog to "speak" and it barks, but if you tell a cat to "speak", it meows. They both understand the same command but do it differently.
 
-### 4. 📦 Encapsulation — *Protect your data*
+**Code Example:**
+```python
+# In main.py, we call task.display() on ANY task without knowing if it's Simple or Recurring.
+# Python picks the right version automatically.
+ctk.CTkLabel(card, text=task.display())
+```
 
-> **File:** `tasks.py` → `class TaskManager`
+### 4. 📦 Encapsulation — *Protecting the data*
+Encapsulation is like a safe. The valuables (data) are locked inside, and you can only access them if you have the key (specific methods). This prevents outside code from accidentally messing up the internal data.
 
-Encapsulation means keeping internal data **private** and only allowing access through controlled methods.
-
-`TaskManager` stores tasks in `self._tasks` (the underscore means private). You cannot modify the list directly from outside. You must use the provided methods: `add()`, `remove()`, `toggle()`, `get_all()`.
-
+**Code Example:**
 ```python
 class TaskManager:
-    def __init__(self):
-        self._tasks = []   # Private — cannot be directly accessed outside
-
-    def add(self, task):   # Controlled public method to add a task
-        self._tasks.append(task)
-        self._save()
-```
-
----
-
-## 🖥️ How the App Works
-
-| File | Role |
-|---|---|
-| `tasks.py` | Defines what a Task is, and manages the list of tasks |
-| `main.py` | Builds the window, buttons, and task cards using `customtkinter` |
-
-**Flow when you add a task:**
-1. You type a title and click **+ Add** in `main.py`
-2. `main.py` creates a `SimpleTask` or `RecurringTask` object
-3. It passes the object to `TaskManager.add()`
-4. `TaskManager` saves it to `tasks.json` and updates the list
-5. `main.py` calls `refresh()` to redraw the task cards on screen
-
----
-
-## 📦 Dependencies
-
-| Package | Purpose |
-|---|---|
-| `customtkinter` | Modern-looking UI widgets for Python |
-
-Install with:
-```bash
-pip install customtkinter
+    def __init__(self, path="tasks.json"):
+        # TaskManager hides the task list using private variables (_tasks).
+        self._tasks = []
 ```

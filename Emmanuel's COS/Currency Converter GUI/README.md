@@ -1,50 +1,54 @@
 # Currency Converter GUI
 
-A robust currency converter application with a graphical user interface built using `customtkinter`. It supports converting between various currencies and implements multiple rounding behaviors.
+## 🚀 Core Functionality
+A desktop currency converter that lets you type in an amount, select a source currency (e.g., USD), and a target currency (e.g., NGN), then instantly see the converted value. It supports two conversion modes: a standard precise result and a rounded result.
 
-## Key Components
+## 🧠 The Four Pillars of OOP (Object-Oriented Programming)
 
-### 1. `CurrencyConverter` (Base Class)
-The foundation of our converter logic.
+### 1. 🔒 Abstraction — *Hiding the complex details*
+Abstraction is like a vending machine — you press a button and get a snack without needing to see the machinery inside. `CurrencyConverter` defines *what* a converter must do (have a `convert()` method) without saying *how* it calculates the result.
+
 ```python
+# Any converter MUST have a convert() method.
+# This class doesn't say HOW — the subclasses decide.
 class CurrencyConverter(ABC):
-    def __init__(self) -> None:
-        self._rates: dict[str, float] = {
-            "USD": 1.00,
-            "EUR": 0.92,
-            # ...
-        }
-
     @abstractmethod
     def convert(self, amount: float, from_currency: str, to_currency: str) -> float:
         pass
 ```
 
-### 2. Converter Subclasses
-Implementations that define specific calculation rules.
+### 2. 👪 Inheritance — *Passing down traits*
+Inheritance is like a child inheriting a parent's house — they get it and can then customize it. Both `StandardConverter` and `RoundedConverter` inherit the `_rates` dictionary from `CurrencyConverter` so they don't have to rewrite all the exchange rates.
+
 ```python
+# StandardConverter gets _rates from its parent for free.
+# It only needs to write the convert() logic.
 class StandardConverter(CurrencyConverter):
-    def convert(self, amount: float, from_currency: str, to_currency: str) -> float:
+    def convert(self, amount, from_currency, to_currency) -> float:
         amount_in_usd = amount / self._rates[from_currency]
         return amount_in_usd * self._rates[to_currency]
 ```
 
-## The Four Pillars of OOP in this Project
+### 3. 🔄 Polymorphism — *Many forms, one call*
+Polymorphism means calling the same method on different objects and getting different (but appropriate) results. The UI calls `.convert()` on whichever converter the user picked — it doesn't need to know which one is active.
 
-This project is a perfect example of Object-Oriented Programming (OOP). Here's how the four main pillars are used:
+```python
+# The app picks the right converter object, then calls .convert().
+# Whether it's Standard or Rounded, the same line of code works.
+result = selected_converter.convert(amount, from_curr, to_curr)
+```
 
-1. **Abstraction**: 
-   - **Where it is**: The `CurrencyConverter` class (`converter.py`).
-   - **How it works**: It acts as a strict template. It says, "Any converter in this app *must* have a `convert` method," but it doesn't say *how* the math is done. This hides complex details and forces a consistent design.
+### 4. 📦 Encapsulation — *Protecting the data*
+Encapsulation keeps data safe inside a class. The `_rates` dictionary lives inside `CurrencyConverter` with an underscore, signaling it's protected. External code should not directly change exchange rates — they're bundled safely with the logic that uses them.
 
-2. **Inheritance**: 
-   - **Where it is**: `StandardConverter` and `RoundedConverter` classes (`converter.py`).
-   - **How it works**: Both of these classes inherit from `CurrencyConverter`. They automatically get the `_rates` dictionary without us having to type it out again. They reuse the common data and add their specific mathematical behaviors.
-
-3. **Encapsulation**: 
-   - **Where it is**: The `self._rates` dictionary in `CurrencyConverter` (`converter.py`).
-   - **How it works**: We bundle the data (the exchange rates) inside the class and put an underscore in front of its name (`_rates`). This is a signal to other programmers: "This is protected data. Do not change it directly from outside the class!" This keeps our conversion rates safe from accidental tampering.
-
-4. **Polymorphism**: 
-   - **Where it is**: In the `perform_conversion` method in the UI (`ui.py`).
-   - **How it works**: The UI has a `self.converter` variable. It doesn't care whether that converter is a `StandardConverter` or a `RoundedConverter`. It simply calls `self.converter.convert(...)` and trusts that the object will know how to calculate the result based on its own specific type.
+```python
+class CurrencyConverter(ABC):
+    def __init__(self) -> None:
+        # _rates is private. Only the converter's own methods should use it.
+        self._rates: dict[str, float] = {
+            "USD": 1.00,
+            "EUR": 0.92,
+            "NGN": 1500.0,
+            # ...and more
+        }
+```
